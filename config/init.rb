@@ -1,8 +1,8 @@
+Root = File.dirname(__FILE__) + '/..'
 module Init
   extend self
 
   DEBUG = false
-  Root = File.dirname(__FILE__) + '/..'
 
   def log(force=false, &message)
     puts yield if block_given? && (force || DEBUG)

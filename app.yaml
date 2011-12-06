@@ -1,0 +1,9 @@
+name: JTGameOfLife
+version: 1
+release: Material
+icons:
+  osx: platform/mac/App.icns
+dmg:
+  ds_store: platform/mac/dmg_ds_store
+run: app/run.rb
+#clone: git checkout-index --prefix=dist/app/ -a

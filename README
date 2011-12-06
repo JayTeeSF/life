@@ -1,0 +1,25 @@
+A shoes implementation of Conway's Game of Life:
+ http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+
+Why?
+Because I wanted to try-out "Shoes"
+And because the Game of Life is pretty cool:
+ http://www.youtube.com/watch?v=XcuBvj0pw-E
+
+So, after installing Ruby-Shoes* try running:
+shoes ./script/life_app.rb
+
+Alternatively, because I hope-to (someday maybe) factor 'shoes'
+out of the game, you can interact w/ my Life class(es):
+./script/test_app.rb
+
+Finally to package:
+ o  install shoes (in parallel directory)
+    ../shoes (see: https://github.com/shoes/shoes/wiki/Building-Shoes-on-Mac-OS-X-10.6-and-10.7)
+ o use rake to compile the app & create its installer:
+    $ cd ../shoes
+    $ rake APP=../life
+    $ rake APP=../life installer
+
+
+*Note: I setup an alias (Unix-alias) to the shoes executable

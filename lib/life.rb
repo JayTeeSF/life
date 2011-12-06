@@ -1,7 +1,9 @@
-libs = []
-lib_dir_glob = "#{Init::Root}/lib/life/*.rb"
-libs += (Dir[ lib_dir_glob ] - libs)
-libs.each { |file| require(file) }
+#libs = []
+#lib_dir_glob = "#{Init::Root}/lib/life/*.rb"
+#libs += (Dir[ lib_dir_glob ] - libs)
+require "#{Root}/lib/life/grid.rb"
+require "#{Root}/lib/life/cell.rb"
+require "#{Root}/lib/life/no_cell.rb"
 
 class Life
   DEFAULT_FPS = 4
