@@ -38,10 +38,17 @@ class Life
     renderer.app do
       click do |button, left, top|
         unless this.seeded?
-          #alert("left: #{left}, top: #{top}")
-          cell = Cell.find_near(this.grid, left, top)
+          cell = Grid::Cell.find_near(this.grid, left, top)
           # toggle:
-          cell.living? ? cell.living = false : cell.living = true
+          if cell.living?
+            cell.living = false
+            color = this.grid.died_fill_color
+          else
+            cell.living = true
+            color = this.grid.born_fill_color
+          end
+          this.grid.display([cell], color)
+          alert("left: #{left}, top: #{top}")
         end
       end
     end
@@ -66,11 +73,11 @@ class Life
             button("manual-seed") do
               # toggle
               if game.seeded?
-                alert("unimplemented")
+                alert("WIP")
                 game.seed
               else
                 game.seeded
-                game.grid.render
+                #game.grid.render
               end
             end
             button("run") do

@@ -73,15 +73,19 @@ class Life
                   end
       end
 
-      def self.near(_grid, _left, _top)
-        return nil unless Instances
-        Instances.detect do |left_coord, top_coord|
-          left_coord < _left && left_coord + width >= _left && top_coord < _top && top_coord + height >= _top
+      def self.instance_coordinates
+        Instances.keys.reduce([]) {|m1, l| m1 += Instances[l].keys.reduce([]){|m2,t| m2 << [l,t]; m2}}
+      end
+      def self.near(_left, _top)
+        return nil if !Instances || Instances.empty?
+        instance_coordinates.detect do |lt_ary|
+          left_coord = lt_ary.first; top_coord = lt_ary.last
+          (left_coord < _left) && (left_coord + width >= _left) && (top_coord < _top) && (top_coord + height >= _top)
         end
       end
 
       def self.find_near(_grid, _left, _top)
-        find(_grid, *near(_grid, _left, _top))
+        find(_grid, *near(_left, _top))
       end
 
       def self.find(_grid, _left, _top)
