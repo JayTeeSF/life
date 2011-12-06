@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+lib = "#{File.dirname(__FILE__) + '/../config/init.rb'}"
+exec "irb -r #{lib} --simple-prompt"

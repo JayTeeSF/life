@@ -1,0 +1,86 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Cell	lib/life/cell.rb	/^    class Cell$/;"	c	class:Life.Grid
+FakeApp	lib/fake_shoes.rb	/^  class FakeApp$/;"	c
+FakeShoes	lib/fake_shoes.rb	/^class FakeShoes$/;"	c
+Grid	lib/life/cell.rb	/^  class Grid$/;"	c	class:Life
+Grid	lib/life/grid.rb	/^  class Grid$/;"	c	class:Life
+Grid	lib/life/no_cell.rb	/^  class Grid$/;"	c	class:Life
+Init	config/init.rb	/^module Init$/;"	m
+Life	lib/life.rb	/^class Life$/;"	c
+Life	lib/life/cell.rb	/^class Life$/;"	c
+Life	lib/life/grid.rb	/^class Life$/;"	c
+Life	lib/life/no_cell.rb	/^class Life$/;"	c
+NoCell	lib/life/no_cell.rb	/^    class NoCell < Cell$/;"	c	class:Life.Grid
+above	lib/life/cell.rb	/^      def above$/;"	f	class:Life.Grid.Cell
+above_left	lib/life/cell.rb	/^      def above_left$/;"	f	class:Life.Grid.Cell
+above_right	lib/life/cell.rb	/^      def above_right$/;"	f	class:Life.Grid.Cell
+app	lib/fake_shoes.rb	/^    def app$/;"	f	class:FakeShoes
+below	lib/life/cell.rb	/^      def below$/;"	f	class:Life.Grid.Cell
+below_left	lib/life/cell.rb	/^      def below_left$/;"	f	class:Life.Grid.Cell
+below_right	lib/life/cell.rb	/^      def below_right$/;"	f	class:Life.Grid.Cell
+beside_left	lib/life/cell.rb	/^      def beside_left$/;"	f	class:Life.Grid.Cell
+beside_right	lib/life/cell.rb	/^      def beside_right$/;"	f	class:Life.Grid.Cell
+born_fill_color	lib/life/grid.rb	/^    def born_fill_color$/;"	f	class:Life.Grid
+bottom_pixel_margin	lib/life/grid.rb	/^    def bottom_pixel_margin$/;"	f	class:Life.Grid
+cell.rb	lib/life/cell.rb	1;"	F
+cells	lib/life/grid.rb	/^    def cells$/;"	f	class:Life.Grid
+console	script/console	1;"	F
+died_fill_color	lib/life/grid.rb	/^    def died_fill_color$/;"	f	class:Life.Grid
+display	lib/life/grid.rb	/^    def display(cell_list, color)$/;"	f	class:Life.Grid
+display_long_dead_or_never_alive_cells	lib/life/grid.rb	/^    def display_long_dead_or_never_alive_cells$/;"	f	class:Life.Grid
+display_long_living_cells	lib/life/grid.rb	/^    def display_long_living_cells$/;"	f	class:Life.Grid
+display_new_born_cells	lib/life/grid.rb	/^    def display_new_born_cells$/;"	f	class:Life.Grid
+display_new_death_cells	lib/life/grid.rb	/^    def display_new_death_cells$/;"	f	class:Life.Grid
+empty_cells	lib/life/grid.rb	/^    def empty_cells$/;"	f	class:Life.Grid
+empty_fill_color	lib/life/grid.rb	/^    def empty_fill_color$/;"	f	class:Life.Grid
+fake_shoes.rb	lib/fake_shoes.rb	1;"	F
+find	lib/life/cell.rb	/^      def self.find(_grid, _left, _top)$/;"	F	class:Life.Grid.Cell
+grid.rb	lib/life/grid.rb	1;"	F
+height	lib/life/cell.rb	/^      def self.height$/;"	F	class:Life.Grid.Cell
+init.rb	config/init.rb	1;"	F
+initial_living_cells	lib/life/grid.rb	/^    def initial_living_cells(percent_living=10)$/;"	f	class:Life.Grid
+initialize	lib/life.rb	/^  def initialize(_title="Game of Life", _renderer=nil, _width=nil, _height=nil)$/;"	f	class:Life
+initialize	lib/life/cell.rb	/^      def initialize(_grid, _left=nil, _top=nil, options={})$/;"	f	class:Life.Grid.Cell
+initialize	lib/life/grid.rb	/^    def initialize(_renderer=nil, _width=nil, _height=nil, _fps=nil)$/;"	f	class:Life.Grid
+initialize	lib/life/no_cell.rb	/^      def initialize(_grid, _left=nil, _top=nil, options={})$/;"	f	class:Life.Grid.NoCell
+inspect	lib/life/cell.rb	/^      def inspect$/;"	f	class:Life.Grid.Cell
+left_pixel_margin	lib/life/grid.rb	/^    def left_pixel_margin$/;"	f	class:Life.Grid
+life.rb	lib/life.rb	1;"	F
+life_app.rb	script/life_app.rb	1;"	F
+live_fill_color	lib/life/grid.rb	/^    def live_fill_color$/;"	f	class:Life.Grid
+living=	lib/life/cell.rb	/^      def living=(bool)$/;"	f	class:Life.Grid.Cell
+living_cells	lib/life/grid.rb	/^    def living_cells$/;"	f	class:Life.Grid
+living_neighbor_count	lib/life/cell.rb	/^      def living_neighbor_count$/;"	f	class:Life.Grid.Cell
+living_neighbors	lib/life/cell.rb	/^      def living_neighbors$/;"	f	class:Life.Grid.Cell
+log	config/init.rb	/^  def log(force=false, &message)$/;"	f	class:Init
+long_dead_or_never_alive_cells	lib/life/grid.rb	/^    def long_dead_or_never_alive_cells$/;"	f	class:Life.Grid
+long_living_cells	lib/life/grid.rb	/^    def long_living_cells$/;"	f	class:Life.Grid
+method_missing	lib/fake_shoes.rb	/^    def method_missing method_sym, *args, &block$/;"	f	class:FakeApp
+neighbors	lib/life/cell.rb	/^      def neighbors$/;"	f	class:Life.Grid.Cell
+new_born_cells	lib/life/grid.rb	/^    def new_born_cells$/;"	f	class:Life.Grid
+new_death_cells	lib/life/grid.rb	/^    def new_death_cells$/;"	f	class:Life.Grid
+no_cell.rb	lib/life/no_cell.rb	1;"	F
+num_across	lib/life/grid.rb	/^    def num_across$/;"	f	class:Life.Grid
+num_down	lib/life/grid.rb	/^    def num_down$/;"	f	class:Life.Grid
+num_pixels_across	lib/life/grid.rb	/^    def num_pixels_across$/;"	f	class:Life.Grid
+num_pixels_down	lib/life/grid.rb	/^    def num_pixels_down$/;"	f	class:Life.Grid
+pixel	lib/life/grid.rb	/^    def pixel(amount)$/;"	f	class:Life.Grid
+random_choices	lib/life/grid.rb	/^    def random_choices(percent_true=50)$/;"	f	class:Life.Grid
+right_pixel_margin	lib/life/grid.rb	/^    def right_pixel_margin$/;"	f	class:Life.Grid
+scale	lib/life/grid.rb	/^    def scale(amount, factor)$/;"	f	class:Life.Grid
+shape	lib/life/cell.rb	/^      def self.shape$/;"	F	class:Life.Grid.Cell
+side_margins	lib/life/grid.rb	/^    def side_margins$/;"	f	class:Life.Grid
+start	lib/life/grid.rb	/^    def start$/;"	f	class:Life.Grid
+startup	config/init.rb	/^  def startup$/;"	f	class:Init
+to_s	lib/life/cell.rb	/^      def to_s$/;"	f	class:Life.Grid.Cell
+top_and_bottom_margins	lib/life/grid.rb	/^    def top_and_bottom_margins$/;"	f	class:Life.Grid
+top_pixel_margin	lib/life/grid.rb	/^    def top_pixel_margin$/;"	f	class:Life.Grid
+update	lib/life/cell.rb	/^      def update$/;"	f	class:Life.Grid.Cell
+update	lib/life/grid.rb	/^    def update$/;"	f	class:Life.Grid
+utility.rb	lib/utility.rb	1;"	F
+width	lib/life/cell.rb	/^      def self.width$/;"	F	class:Life.Grid.Cell
