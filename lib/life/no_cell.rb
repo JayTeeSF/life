@@ -6,7 +6,9 @@ class Life
         @living = false
         @new_death = false
         @new_born = false
+        @renderable = false
       end
+
       private
       attr_accessor :new_born, :new_death
     end

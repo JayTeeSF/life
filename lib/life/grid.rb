@@ -91,8 +91,8 @@ class Life
       if @cells.empty?
         across_array = left_pixel_margin.step(num_pixels_across, Cell.width).to_a
         down_array = top_pixel_margin.step(num_pixels_down, Cell.height).to_a
-        down_array.each do |top|
-          across_array.each do |left|
+        across_array.each do |left|
+          down_array.each do |top|
             @cells << Cell.new(self, left, top)
           end
         end
@@ -146,9 +146,7 @@ class Life
     def display(cell_list, color)
       raise "Missing renderer" unless game.renderer
       game.renderer.fill game.renderer.send(color)
-      cell_list.each do |cell|
-        game.renderer.send( Cell.shape, cell.top, cell.left, cell.width, cell.height )
-      end
+      cell_list.map(&:render)
     end
 
     def display_new_born_cells

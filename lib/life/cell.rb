@@ -77,15 +77,27 @@ class Life
         Instances.keys.reduce([]) {|m1, l| m1 += Instances[l].keys.reduce([]){|m2,t| m2 << [l,t]; m2}}
       end
       def self.near(_left, _top)
-        return nil if !Instances || Instances.empty?
+        return [_left, _top] if !Instances || Instances.empty?
         instance_coordinates.detect do |lt_ary|
           left_coord = lt_ary.first; top_coord = lt_ary.last
           (left_coord < _left) && (left_coord + width >= _left) && (top_coord < _top) && (top_coord + height >= _top)
-        end
+        end || [_left, _top]
+      end
+
+      # TODO: refactor - law of demeter
+      def self.renderer(_grid)
+        _grid.game.renderer
       end
 
       def self.find_near(_grid, _left, _top)
-        find(_grid, *near(_left, _top))
+        #renderer(_grid).info("clicked: #{_left}, #{_top}")
+        left_and_top = near(offset(:left, _left), offset(:top, _top))
+        #renderer(_grid).info("lat: #{left_and_top.inspect}")
+        find _grid, left_and_top.first, left_and_top.last
+      end
+
+      def self.offset(key, pixel_amount)
+        Life::FIRST_CELL[key][:grid] + (pixel_amount - Life::FIRST_CELL[key][:pixel])
       end
 
       def self.find(_grid, _left, _top)
@@ -94,7 +106,7 @@ class Life
           if _left < _grid.left_pixel_margin || _top < _grid.top_pixel_margin || _left > _grid.num_pixels_across || _top > _grid.num_pixels_down
             Instances[_left][_top] = NoCell.new(_grid, _left, _top)
           else
-            warn "missing cell at #{_left}, #{_top}"
+            return nil
           end
         end
 
@@ -107,6 +119,7 @@ class Life
       alias :new_born? :new_born
       alias :new_death? :new_death
       def initialize(_grid, _left=nil, _top=nil, options={})
+        @renderable = true
         @new_born = false
         @new_death = false
         @grid = _grid
@@ -117,6 +130,15 @@ class Life
         @living = options.has_key?(:living) ? options[:living] : false
         Instances[@left] ||= {}
         Instances[@left][@top] = self
+      end
+
+      def renderable?
+        @renderable
+      end
+
+      def render
+        return unless renderable?
+        self.class.renderer(grid).send( Cell.shape, left, top, width, height )
       end
 
       def living=(bool)

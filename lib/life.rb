@@ -8,6 +8,12 @@ require "#{Root}/lib/life/no_cell.rb"
 class Life
   DEFAULT_FPS = 2
 
+  # TODO: determine this dynamically !?!
+  FIRST_CELL = {
+    :left => {:pixel => 50,  :grid => 40},
+    :top  => {:pixel => 125, :grid => 40}
+  }
+
   attr_reader :title, :grid, :fps
   attr_accessor :renderer, :started, :animation_stack, :click_stack
   def initialize(_title="Game of Life", _renderer=nil, _width=nil, _height=nil, _fps=nil)
@@ -38,17 +44,18 @@ class Life
     renderer.app do
       click do |button, left, top|
         unless this.seeded?
-          cell = Grid::Cell.find_near(this.grid, left, top)
-          # toggle:
-          if cell.living?
-            cell.living = false
-            color = this.grid.died_fill_color
-          else
-            cell.living = true
-            color = this.grid.born_fill_color
+          if cell = Grid::Cell.find_near(this.grid, left, top)
+            # toggle:
+            if cell.living?
+              cell.living = false
+              color = this.grid.died_fill_color
+            else
+              cell.living = true
+              color = this.grid.born_fill_color
+            end
+            this.grid.display([cell], color)
           end
-          this.grid.display([cell], color)
-          alert("left: #{left}, top: #{top}")
+          #alert("left: #{left}, top: #{top}")
         end
       end
     end
@@ -73,11 +80,11 @@ class Life
             button("manual-seed") do
               # toggle
               if game.seeded?
-                alert("WIP")
+                @status.replace("manual seeding...")
                 game.seed
               else
+                @status.replace("")
                 game.seeded
-                #game.grid.render
               end
             end
             button("run") do
@@ -93,6 +100,7 @@ class Life
         end
 
         game.renderer = stack
+        @status = para "", :size => 8
         game.grid.clear
       end
     end
