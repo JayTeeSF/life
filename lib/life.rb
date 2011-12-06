@@ -6,7 +6,7 @@ require "#{Root}/lib/life/cell.rb"
 require "#{Root}/lib/life/no_cell.rb"
 
 class Life
-  DEFAULT_FPS = 4
+  DEFAULT_FPS = 2
 
   attr_reader :title, :grid, :fps
   attr_accessor :renderer

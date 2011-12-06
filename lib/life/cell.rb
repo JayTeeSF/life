@@ -52,10 +52,12 @@ class Life
         @living = if living?
                     case living_neighbor_count
                     when  0..1
+                      @new_death = true
                       false
                     when  2..3
                       true
                     when  4..8
+                      @new_death = true
                       false
                     else
                       @living
@@ -63,6 +65,7 @@ class Life
                   else
                     case living_neighbor_count
                     when  3
+                      @new_born = true
                       true
                     else
                       # alert("Bug: living count: #{living_neighbor_count}")
