@@ -2,8 +2,8 @@ class Life
   class Grid
     class Cell
       Instances = {}
-      DEFAULT_WIDTH = 5
-      DEFAULT_HEIGHT = 5
+      DEFAULT_WIDTH = 10
+      DEFAULT_HEIGHT = 10
       DEFAULT_SHAPE = :rect
 
       NEIGHBOR_NAMES = [
@@ -68,10 +68,20 @@ class Life
                       @new_born = true
                       true
                     else
-                      # alert("Bug: living count: #{living_neighbor_count}")
                       @living
                     end
                   end
+      end
+
+      def self.near(_grid, _left, _top)
+        return nil unless Instances
+        Instances.detect do |left_coord, top_coord|
+          left_coord < _left && left_coord + width >= _left && top_coord < _top && top_coord + height >= _top
+        end
+      end
+
+      def self.find_near(_grid, _left, _top)
+        find(_grid, *near(_grid, _left, _top))
       end
 
       def self.find(_grid, _left, _top)

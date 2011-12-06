@@ -1,14 +1,16 @@
 class Life
   class Grid
-    MARGIN = 10
-    DEFAULT_WIDTH = 300
-    DEFAULT_HEIGHT = 200
+    MARGIN = 5
+    DEFAULT_WIDTH = 500
+    DEFAULT_HEIGHT = 500
     DEFAULT_PERCENT_LIVING = 9
 
     DEFAULT_LIVE_FILL_COLOR = :blue
     DEFAULT_DIED_FILL_COLOR = :black
     DEFAULT_EMPTY_FILL_COLOR = :white
     DEFAULT_BORN_FILL_COLOR = :red
+
+    PIXEL_SCALE = 8
 
     attr_reader :width, :height
     attr_accessor :game
@@ -45,7 +47,7 @@ class Life
     end
 
     def pixel(amount)
-      scale(amount, 5)
+      scale(amount, PIXEL_SCALE)
     end
 
     def scale(amount, factor)
@@ -89,8 +91,8 @@ class Life
       if @cells.empty?
         across_array = left_pixel_margin.step(num_pixels_across, Cell.width).to_a
         down_array = top_pixel_margin.step(num_pixels_down, Cell.height).to_a
-        across_array.each do |left|
-          down_array.each do |top|
+        down_array.each do |top|
+          across_array.each do |left|
             @cells << Cell.new(self, left, top)
           end
         end
@@ -177,6 +179,15 @@ class Life
       display_new_death_cells
       display_long_living_cells
       display_long_dead_or_never_alive_cells
+    end
+
+    def clear
+      cells.map do |c|
+        c.living = false
+        c.new_born = false
+        c.new_death = false
+      end
+      render
     end
 
     def start
