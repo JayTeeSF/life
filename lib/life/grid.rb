@@ -20,6 +20,19 @@ class Life
       @height = _height || DEFAULT_HEIGHT
       @cells = nil
       @start_cells = nil
+      @color_mode = :two_color
+    end
+
+    def two_color?
+      :two_color == @color_mode
+    end
+
+    def two_color
+      @color_mode = :two_color
+    end
+
+    def multi_color
+      @color_mode = :multi_color
     end
 
     def live_fill_color
@@ -27,11 +40,11 @@ class Life
     end
 
     def born_fill_color
-      DEFAULT_BORN_FILL_COLOR
+      two_color? ? live_fill_color : DEFAULT_BORN_FILL_COLOR
     end
 
     def died_fill_color
-      DEFAULT_DIED_FILL_COLOR
+      two_color? ? empty_fill_color : DEFAULT_DIED_FILL_COLOR
     end
 
     def empty_fill_color
@@ -146,6 +159,8 @@ class Life
     def display(cell_list, color)
       raise "Missing renderer" unless game.renderer
       game.renderer.fill game.renderer.send(color)
+      #bogus: left: 0, top: 75
+      #game.renderer.info("stack left:#{game.renderer.left.inspect}, top: #{game.renderer.top.inspect}") 
       cell_list.map(&:render)
     end
 

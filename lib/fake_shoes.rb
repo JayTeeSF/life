@@ -1,7 +1,8 @@
 class FakeShoes
   class << self
-    def app
+    def app(options={}, &block)
       @app ||= FakeApp.new
+      @app.eval(block.call)
     end
   end
   class FakeApp

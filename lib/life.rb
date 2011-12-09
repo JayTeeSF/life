@@ -8,14 +8,8 @@ require "#{Root}/lib/life/no_cell.rb"
 class Life
   DEFAULT_FPS = 2
 
-  # TODO: determine this dynamically !?!
-  FIRST_CELL = {
-    :left => {:pixel => 50,  :grid => 40},
-    :top  => {:pixel => 125, :grid => 40}
-  }
-
-  attr_reader :title, :grid, :fps
-  attr_accessor :renderer, :started, :animation_stack, :click_stack
+  attr_reader :title, :grid
+  attr_accessor :renderer, :started, :animation, :click_stack, :fps
   def initialize(_title="Game of Life", _renderer=nil, _width=nil, _height=nil, _fps=nil)
     @title = _title
     @renderer = _renderer
@@ -48,7 +42,7 @@ class Life
             # toggle:
             if cell.living?
               cell.living = false
-              color = this.grid.died_fill_color
+              color = this.grid.empty_fill_color
             else
               cell.living = true
               color = this.grid.born_fill_color
@@ -66,35 +60,98 @@ class Life
     @seeded = true
   end
 
-  def self.start
-    game = Life.new
-    Shoes.app :width => game.grid.width, :height => game.grid.height, :title => game.title do
-      stack :margin => 10 do
+  def self.controls
+    @controls ||= {}
+  end
+  def self.padding
+    @padding ||= {:stack_margin => 10, :bottom_margin => 40}
+  end
+
+  def self.start(game = Life.new, shoes=Shoes)
+    this = self # Life class
+    shoes.app :width => game.grid.width, :height => game.grid.height + this.padding[:bottom_margin], :title => game.title do
+      background red..black
+      stack :margin => this.padding[:stack_margin] do
         stack do
           background '#fd9', :curve => 12
           tagline game.title, :align => "center"
           flow do
-            button("auto-seed") do
-              game.grid.start
-            end
-            button("manual-seed") do
-              # toggle
-              if game.seeded?
-                @status.replace("manual seeding...")
-                game.seed
-              else
-                @status.replace("")
-                game.seeded
+            stack :width => '15%' do
+              button("seed") do
+                if this.controls[:auto_seed].checked?
+                  game.grid.start
+                else
+                  # toggle
+                  if game.seeded?
+                    @status.replace("manual seeding...")
+                    game.seed
+                  else
+                    @status.replace("")
+                    game.seeded
+                  end
+                end
               end
             end
-            button("run") do
-              game.start_animation
+            stack :width => '25%' do
+              flow do
+                this.controls[:auto_seed] = radio(:seed); para "auto"
+              end
+              flow do
+                this.controls[:manual_seed] = radio(:seed); para "manual"
+              end
             end
-            button("stop") do
-              game.stop_animation
+
+            this.controls[:auto_seed].click do |radio|
+              info("auto_seed mode")
             end
-            button("clear") do
-              game.grid.clear
+
+            this.controls[:manual_seed].click do |radio|
+              info("manual_seed mode")
+            end
+
+            stack :width => '25%' do
+              flow do
+                this.controls[:two_tone] = radio(:colors); para "two tone"
+              end
+              flow do
+                this.controls[:multi_tone] = radio(:colors); para "multi tone"
+              end
+            end
+
+            this.controls[:two_tone].click do |radio|
+              game.grid.two_color
+              info("two_tone mode")
+            end
+
+            this.controls[:multi_tone].click do |radio|
+              game.grid.multi_color
+              info("multi_tone mode")
+            end
+
+            stack :width => '20%' do
+              flow do
+                this.controls[:start_button] = button("start") do
+                  game.start_animation
+                  info("animation started")
+                end
+                  #radio(:start_stop); para "start"
+              end
+              flow do
+                this.controls[:stop_button] = button("stop") do |radio|
+                  game.stop_animation
+                  info("animation stopped")
+                end
+                  #radio(:start_stop); para "stop"
+              end
+            end
+            stack :width => '15%' do
+              this.controls[:quit_button] = button("quit") do
+                exit
+              end
+              this.controls[:clear_button] = button("clear") do
+                #this.controls[:stop_radio_button].checked = true
+                game.grid.clear
+              end
             end
           end
         end
@@ -102,26 +159,35 @@ class Life
         game.renderer = stack
         @status = para "", :size => 8
         game.grid.clear
+        info("stack left:#{game.renderer.left.inspect}, top: #{game.renderer.top.inspect}") 
+      end
+      start do
+        info("start block")
+        this.controls[:two_tone].checked = true
+        #this.controls[:stop_radio_button].checked = true
+        this.controls[:manual_seed].checked = true
+        Grid::Cell.first_cell(game.grid, this.padding[:stack_margin], this.padding[:stack_margin])
       end
     end
   end
 
   def stop_animation
     @started = false
-    #if @animation_stack
+    #if @animation
     #  renderer.app.info("got stack")
-    #  @animation_stack.clear
+    #  @animation
     #end
   end
 
   def start_animation
     return if @started
     @started = true
-    return if @animation_stack
+    renderer.info("animation: #{animation.inspect}")
+    return if @animation
     this = self
     renderer.app do
-      this.animation_stack = stack do
-        animate(this.fps) do
+      stack do
+        this.animation = animate(this.fps) do
           if this.started
             this.renderer.clear do
               this.grid.update

@@ -91,13 +91,31 @@ class Life
 
       def self.find_near(_grid, _left, _top)
         #renderer(_grid).info("clicked: #{_left}, #{_top}")
-        left_and_top = near(offset(:left, _left), offset(:top, _top))
+        left_and_top = near(offset(_grid, :left, _left), offset(_grid, :top, _top))
         #renderer(_grid).info("lat: #{left_and_top.inspect}")
         find _grid, left_and_top.first, left_and_top.last
       end
 
-      def self.offset(key, pixel_amount)
-        Life::FIRST_CELL[key][:grid] + (pixel_amount - Life::FIRST_CELL[key][:pixel])
+      def self.offset(_grid, key, pixel_amount)
+        #renderer(_grid).info("first cell: #{first_cell(_grid).inspect}")
+        first_cell(_grid)[key][:grid] + (pixel_amount - first_cell(_grid)[key][:pixel])
+      end
+
+      # TODO: try caching this value from within the Shoes.app start block!
+      def self.first_cell(_grid, left_margin=0, top_margin=0)
+        @first_cell ||= begin
+                          grid_left = Instances.keys.sort.first
+                          grid_top = Instances[grid_left].keys.sort.first
+                          if cell = Cell.find(_grid, grid_left, grid_top)
+                            pixel_left = cell.element.left + left_margin
+                            pixel_top = cell.element.top + top_margin + cell.element.parent.top
+
+                            {
+                              :left => {:pixel => pixel_left, :grid => grid_left},
+                              :top  => {:pixel => pixel_top,  :grid => grid_top}
+                            }
+                          end
+                        end
       end
 
       def self.find(_grid, _left, _top)
@@ -113,7 +131,7 @@ class Life
         Instances[_left][_top]
       end
 
-      attr_reader :left, :top, :width, :height, :living
+      attr_reader :left, :top, :width, :height, :living, :element
       alias :living? :living
       attr_accessor :new_born, :new_death
       alias :new_born? :new_born
@@ -128,6 +146,7 @@ class Life
         @left = _left || Life::Grid::LEFT_MARGIN
         @top = _top ||Life::Grid::TOP_MARGIN
         @living = options.has_key?(:living) ? options[:living] : false
+        @element = nil
         Instances[@left] ||= {}
         Instances[@left][@top] = self
       end
@@ -138,7 +157,7 @@ class Life
 
       def render
         return unless renderable?
-        self.class.renderer(grid).send( Cell.shape, left, top, width, height )
+        @element = self.class.renderer(grid).send( Cell.shape, left, top, width, height )
       end
 
       def living=(bool)
