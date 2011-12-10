@@ -1,8 +1,9 @@
 name: JTGameOfLife
 version: 1
-release: Material
+release: PrAlpha
 icons:
   osx: platform/mac/App.icns
+  win32: platform/msw/shoes.ico
 dmg:
   ds_store: platform/mac/dmg_ds_store
 run: app/run.rb
