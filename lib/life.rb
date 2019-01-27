@@ -67,7 +67,7 @@ class Life
     @padding ||= {:stack_margin => 10, :bottom_margin => 40}
   end
 
-  def self.start(game = Life.new, shoes=Shoes)
+  def self.start(game = Life.new, shoes=::Shoes)
     this = self # Life class
     shoes.app :width => game.grid.width, :height => game.grid.height + this.padding[:bottom_margin], :title => game.title do
       background red..black

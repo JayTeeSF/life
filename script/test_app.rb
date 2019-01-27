@@ -15,7 +15,7 @@ game = Life.new
 puts "title: #{game.title}"
 puts "fps: #{game.fps}"
 puts ":width => #{game.grid.width}, :height => #{game.grid.height}"
-game.renderer = FakeShoes.app
+game.renderer = FakeShoes.app {|*args| args }
 puts "\n\n"
 
 CmdLine.pause "click to continue"

@@ -1,4 +1,7 @@
-#!/usr/bin/env shoes
+#!/usr/bin/env ruby
+
+#/Applications/Shoes.app/Contents/MacOS/shoes
+#/usr/bin/env shoes
 
 Root = File.dirname(__FILE__)
 
